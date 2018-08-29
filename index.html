@@ -36,12 +36,106 @@
 						or on the cloud. Nowadays, many cloud providers and stacks provide rich sets of API for users to manage and run their
 						infrastructure. This is ripe for software to automate the management of infrastructure. </p>
 
-					<p>Using Infrastructure as Code allows us to track changes, reason about infrastructure and even reproduce an exact
-						replica of the infrastructure. Terraform is one such tool that works across many cloud providers and service providers
-						such as Cloudflare.
+					<p>
+						Using Infrastructure as Code allows us to track changes, reason about infrastructure and even reproduce an exact replica
+						of the infrastructure. Terraform is one such tool that works across many cloud providers and service providers such
+						as Cloudflare.
 					</p>
 
 				</aside>
+			</section>
+
+			<section>
+				<section>
+					<h2>Problems with Managing Infrastructure (Manually)
+					</h2>
+				</section>
+
+				<section>
+					<h3>Visibility</h3>
+					<ul>
+						<li>Details are siloed in someone's head</li>
+						<li>Changes are not visible</li>
+						<li>Dependencies are hard to see</li>
+					</ul>
+
+					<aside class="notes">
+						<ul>
+							<li>Difficult to see the whole "big picture" of your infrastructure configuration</li>
+							<li>Difficult to tell what the rationale for some of the configuration is</li>
+							<li>Changes are not easily trackable -- what got changed by whom when?</li>
+							<li>No easy way to enforce visibility and review of changes</li>
+							<li>Hard to tell what depends on what</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h3>Difficulty</h3>
+					<ul>
+						<li>Almost impossible to replicate</li>
+						<li>Different APIs for different cloud providers</li>
+						<li>Tedious and prone to errors</li>
+					</ul>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Infrastructure as Code</h2>
+
+					Provision, update, and manage your cloud infrastructure with code.
+				</section>
+
+				<section>
+					<h3>Benefits</h3>
+					<ul>
+						<li>Automated</li>
+						<li>Version control with VCS like Git</li>
+						<li>Replicate just by "copy/pasting" or changing variables</li>
+						<li>"Just" read the code to figure out details</li>
+						<li>"Just" read the code to figure out dependencies</li>
+						<li>Abstraction and reusability</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Terraform</h3>
+					<ul>
+						<li>FOSS and paid versions</li>
+						<li>Declarative configuration</li>
+						<li>Single format across multiple providers</li>
+						<li>Huge list of providers supported</li>
+					</ul>
+
+					<aside class="notes" data-markdown>
+						<textarea data-template>
+							- “Workflow-level abstraction”: Single workflow to provision resources across many provider by writing them in a common configuration
+							format and invoked from a single place
+							- Terraform will determine the dependencies and relationship between resources.
+							- Terraform shows you a plan first before applying any changes, including any diffs
+							- Terraform also allows you to manage the provisioning configuration of resources across a huge range of providers, including Kubenetes, Cloudflare and so on
+
+						</textarea>
+					</aside>
+				</section>
+
+				<section>
+					<h3>Ansible/Chef/Puppet</h3>
+					<ul>
+						<li>Configuration management that can also manage infrastructure</li>
+						<li>More "procedural" form of provisioning</li>
+						<li>Works well with Terraform — configure after Terraform provisions</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>CloudFormation/Heat</h3>
+					<ul>
+						<li>Specific to the service</li>
+						<li>Each service has its own syntax</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 	</div>
@@ -54,6 +148,8 @@
 		// - https://github.com/hakimel/reveal.js#configuration
 		// - https://github.com/hakimel/reveal.js#dependencies
 		Reveal.initialize({
+			fragmentInURL: true,
+			progress: true,
 			dependencies: [
 				{ src: 'plugin/markdown/marked.js' },
 				{ src: 'plugin/markdown/markdown.js' },
