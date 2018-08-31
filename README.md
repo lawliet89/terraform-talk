@@ -23,4 +23,10 @@ AWS_PROFILE=ace terraform apply --var-file vars.tfvars
  - https://asciinema.org/a/mFBIpF1urJQin0dgeNGseyONK
  - https://github.com/lawliet89/terraform-talk/commit/dbb4029952a48db4736e994baee8a485036eba9e
 
+AWS_PROFILE=ace terraform destroy --var-file vars.tfvars
+https://asciinema.org/a/CZSxEyipg4hHvDsYUEIbXBdZg
+
+AWS_PROFILE=ace terraform apply --var-file vars.tfvars
+Recreation
+https://asciinema.org/a/1CMr2pbjGC54pG8WJY3hZWpjZ
 -->
