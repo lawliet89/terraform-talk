@@ -41,17 +41,12 @@ resource "aws_lb_listener" "https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn   = "${var.client_certificate_arn}"
+  certificate_arn   = "${var.certificate_arn}"
 
   default_action {
     target_group_arn = "${aws_lb_target_group.sink.arn}"
     type             = "forward"
   }
-}
-
-resource "aws_lb_listener_certificate" "server" {
-  listener_arn    = "${aws_lb_listener.https.arn}"
-  certificate_arn = "${var.server_certificate_arn}"
 }
 
 # Sink Target group that goes to nowhere
@@ -76,7 +71,7 @@ resource "aws_lb_listener_rule" "client" {
 
   condition {
     field  = "host-header"
-    values = ["${aws_route53_record.client.fqdn}"]
+    values = ["${aws_route53_record.domain.fqdn}"]
   }
 }
 
@@ -104,9 +99,22 @@ resource "aws_autoscaling_attachment" "client" {
   autoscaling_group_name = "${aws_autoscaling_group.client.id}"
 }
 
+resource "aws_lb_listener" "server_wss" {
+  load_balancer_arn = "${aws_lb.lb.arn}"
+  port              = "${var.server_lb_port}"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  certificate_arn   = "${var.certificate_arn}"
+
+  default_action {
+    target_group_arn = "${aws_lb_target_group.sink.arn}"
+    type             = "forward"
+  }
+}
+
 resource "aws_lb_listener_rule" "server" {
-  listener_arn = "${aws_lb_listener.https.arn}"
-  priority     = 101
+  listener_arn = "${aws_lb_listener.server_wss.arn}"
+  priority     = 100
 
   action {
     type             = "forward"
@@ -115,7 +123,7 @@ resource "aws_lb_listener_rule" "server" {
 
   condition {
     field  = "host-header"
-    values = ["${aws_route53_record.server.fqdn}"]
+    values = ["${aws_route53_record.domain.fqdn}"]
   }
 }
 
@@ -155,6 +163,16 @@ resource "aws_security_group_rule" "lb_https_ingress" {
   type              = "ingress"
   from_port         = 443
   to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.lb.id}"
+}
+
+# _ -> LB
+resource "aws_security_group_rule" "lb_wss_ingress" {
+  type              = "ingress"
+  from_port         = "${var.server_lb_port}"
+  to_port           = "${var.server_lb_port}"
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = "${aws_security_group.lb.id}"

@@ -4,9 +4,10 @@ data "template_file" "client_user_data" {
   template = "${file("${path.module}/files/client.sh")}"
 
   vars {
-    url         = "${var.app_src_url}"
-    branch      = "${var.app_branch}"
-    server_fqdn = "${aws_route53_record.server.fqdn}"
+    url            = "${var.app_src_url}"
+    branch         = "${var.app_branch}"
+    server_fqdn    = "${aws_route53_record.domain.fqdn}"
+    server_lb_port = "${var.server_lb_port}"
   }
 }
 

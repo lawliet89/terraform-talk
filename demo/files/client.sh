@@ -29,7 +29,7 @@ services:
     build:
       context: .
       args:
-        WS_URL: "wss://${server_fqdn}"
+        WS_URL: "wss://${server_fqdn}:${server_lb_port}"
 
 EOF
 )

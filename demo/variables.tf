@@ -10,28 +10,16 @@ variable "subnet_ids" {
   type        = "list"
 }
 
-variable "client_route53_zone" {
-  description = "Route53 Zone Name to create the Client DNS record in"
+variable "route53_zone" {
+  description = "Route53 Zone Name to create the DNS record in"
 }
 
-variable "client_domain" {
-  description = "Domain for Client"
+variable "domain" {
+  description = "Domain"
 }
 
-variable "client_certificate_arn" {
-  description = "ARN of the certificate in ACM to use for the Client domain"
-}
-
-variable "server_route53_zone" {
-  description = "Route53 Zone name to create the Server DNS record in"
-}
-
-variable "server_domain" {
-  description = "Domain for the server"
-}
-
-variable "server_certificate_arn" {
-  description = "ARN of the certificate in ACM to use for the Server domain"
+variable "certificate_arn" {
+  description = "ARN of the certificate in ACM to use for the domain"
 }
 
 #######################################
@@ -93,4 +81,9 @@ variable "ssh_cidr" {
 variable "lb_name" {
   description = "Name of the load balancer to create"
   default     = "comicchat"
+}
+
+variable "server_lb_port" {
+  description = "Port to expose the Server WS endpoint"
+  default     = 8080
 }
