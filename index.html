@@ -82,7 +82,8 @@
 						<ul>
 							<li>Manual configuration and setting makes it really difficult to replicate</li>
 							<li>Imagine having to set up multiple environments (like staging and production)</li>
-							<li>Imagine trying to configure something repetitively: e.g. AWS config for ALL regions. Enable AWS Guard Duty for ALL regions (as recommended by AWS).</li>
+							<li>Imagine trying to configure something repetitively: e.g. AWS config for ALL regions. Enable AWS Guard Duty for
+								ALL regions (as recommended by AWS).</li>
 							<li>You can try to automate this but everyone has their own (different) APIs</li>
 						</ul>
 					</aside>
@@ -146,6 +147,94 @@
 					</ul>
 				</section>
 			</section>
+
+			<section>
+				<section>
+					<h2>Demo</h2>
+				</section>
+
+				<section>
+					<h3>Application</h3>
+					<ul>
+						<li>Silly Chatroom</li>
+						<li>Stateless Static Javascript Client</li>
+						<li>Stateful Server</li>
+					</ul>
+
+					<div>
+						<img src="https://camo.githubusercontent.com/e2ccdf4567b426a81a11c081ee7bdd5dbbd13210/687474703a2f2f692e696d6775722e636f6d2f4a316b3769776e2e706e67"
+						 style="max-height: 240px;"> <br>
+						<a href="https://github.com/gyng/comicchat">https://github.com/gyng/comicchat</a>
+					</div>
+				</section>
+
+				<section>
+					<h3>Basic Idea</h3>
+					<ul>
+						<li>ASG for clients and servers separately</li>
+						<li>One ELB with different listener rules to target the ASG</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Diagram</h3>
+					<img src="demo/demo.svg" style="max-height: 480px; background-color: white;)">
+				</section>
+
+				<section>
+					<h3>Hidden Details...</h3>
+					<ul>
+						<li>Security groups rules between ELB and EC2 instances</li>
+						<li>Launch configuration details for ASG</li>
+						<li>Listener for ports</li>
+						<li>Redirect HTTP -> HTTPS listner</li>
+						<li>Certificate for HTTPS</li>
+						<li>Listener rules to handle different host names</li>
+						<li>Target groups for ASG</li>
+						<li>...</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Terraform Implementation</h3>
+					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">https://github.com/lawliet89/terraform-talk/tree/master/demo</a>
+				</section>
+
+				<section>
+					<h3>Dependency Graph</h3>
+					<div style="overflow: auto;">
+						<a href="demo/graph.svg" target="_blank"><img src="demo/graph.svg"></a>
+					</div>
+				</section>
+
+				<section>
+					<h3><code>terraform init</code></h3>
+					<script src="https://asciinema.org/a/lTJxUdcfzWIuwSuYuSvLDHqIZ.js" id="asciicast-lTJxUdcfzWIuwSuYuSvLDHqIZ"></script>
+				</section>
+
+				<section>
+					<h3><code>terraform plan</code></h3>
+
+					<script src="https://asciinema.org/a/RI6aSJOKS2RFWRmW7WoeoK3Bh.js" id="asciicast-RI6aSJOKS2RFWRmW7WoeoK3Bh" async></script>
+				</section>
+
+				<section>
+					<h3><code>terraform apply</code></h3>
+
+					<script src="https://asciinema.org/a/199040.js" id="asciicast-199040" async></script>
+				</section>
+
+				<section>
+					<h3>Changing and fixing <code>terraform apply</code></h3>
+					<script src="https://asciinema.org/a/w4v5XGo4aod7t3PbJt6H76akC.js" id="asciicast-w4v5XGo4aod7t3PbJt6H76akC" async></script>
+				</section>
+
+				<section>
+					<h3>Changing implementation details (<a href="https://github.com/lawliet89/terraform-talk/commit/dbb4029952a48db4736e994baee8a485036eba9e" target="_blank">diff</a>)</h3>
+
+					<script src="https://asciinema.org/a/mFBIpF1urJQin0dgeNGseyONK.js" id="asciicast-mFBIpF1urJQin0dgeNGseyONK" async></script>
+				</section>
+			</section>
 		</div>
 	</div>
 
@@ -159,6 +248,7 @@
 		Reveal.initialize({
 			fragmentInURL: true,
 			progress: true,
+			history: true,
 			dependencies: [
 				{ src: 'plugin/markdown/marked.js' },
 				{ src: 'plugin/markdown/markdown.js' },
