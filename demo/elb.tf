@@ -4,7 +4,7 @@ resource "aws_lb" "lb" {
   security_groups = ["${aws_security_group.lb.id}"]
   subnets         = ["${var.subnet_ids}"]
 
-  tags = "${var.tags}"
+  tags = "${merge(var.tags, map("Name", "${var.lb_name}"))}"
 }
 
 resource "aws_security_group" "lb" {
@@ -57,7 +57,7 @@ resource "aws_lb_target_group" "sink" {
   vpc_id               = "${var.vpc_id}"
   deregistration_delay = "30"                  # It doesn't matter
 
-  tags = "${var.tags}"
+  tags = "${merge(var.tags, map("Name", "${var.lb_name}-sink"))}"
 }
 
 resource "aws_lb_listener_rule" "client" {
@@ -81,7 +81,7 @@ resource "aws_lb_target_group" "client" {
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"
 
-  tags = "${var.tags}"
+  tags = "${merge(var.tags, map("Name", "${var.lb_name}-client"))}"
 
   stickiness {
     type = "lb_cookie"
@@ -133,7 +133,7 @@ resource "aws_lb_target_group" "server" {
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"
 
-  tags = "${var.tags}"
+  tags = "${merge(var.tags, map("Name", "${var.lb_name}-server"))}"
 
   stickiness {
     type = "lb_cookie"

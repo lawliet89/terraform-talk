@@ -64,6 +64,8 @@ resource "aws_security_group" "server" {
   description = "Security Group for ${var.server_asg_name}"
   vpc_id      = "${var.vpc_id}"
 
+  tags = "${merge(var.tags, map("Name", "${var.server_asg_name}"))}"
+
   # aws_launch_configuration.launch_configuration in this module sets create_before_destroy to true, which means
   # everything it depends on, including this resource, must set it as well, or you'll get cyclic dependency errors
   # when you try to do a terraform destroy.

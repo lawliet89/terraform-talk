@@ -3,7 +3,7 @@
 This demo deploys [`comicchat`](https://github.com/gyng/comicchat) behind an Elastic Load balancer
 using [Terraform](https://www.terraform.io/).
 
-__DIAGRAM OF INFRASTRUCTURE__ Cloudcraft
+![Diagram](demo.svg)
 
 ## Usage
 
