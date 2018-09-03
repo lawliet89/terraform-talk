@@ -196,6 +196,7 @@
 					</ul>
 				</section>
 
+				<!--
 				<section>
 					<h3>Terraform Implementation</h3>
 					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">https://github.com/lawliet89/terraform-talk/tree/master/demo</a>
@@ -210,30 +211,31 @@
 
 				<section>
 					<h3><code>terraform init</code></h3>
-					<script src="https://asciinema.org/a/lTJxUdcfzWIuwSuYuSvLDHqIZ.js" id="asciicast-lTJxUdcfzWIuwSuYuSvLDHqIZ"></script>
+					<script src="https://asciinema.org/a/lTJxUdcfzWIuwSuYuSvLDHqIZ.js" id="asciicast-lTJxUdcfzWIuwSuYuSvLDHqIZ" async></script>
 				</section>
 
 				<section>
 					<h3><code>terraform plan</code></h3>
 
-					<script src="https://asciinema.org/a/RI6aSJOKS2RFWRmW7WoeoK3Bh.js" id="asciicast-RI6aSJOKS2RFWRmW7WoeoK3Bh"></script>
+					<script src="https://asciinema.org/a/RI6aSJOKS2RFWRmW7WoeoK3Bh.js" id="asciicast-RI6aSJOKS2RFWRmW7WoeoK3Bh" async></script>
 				</section>
 
 				<section>
 					<h3><code>terraform apply</code></h3>
 
-					<script src="https://asciinema.org/a/199040.js" id="asciicast-199040"></script>
+					<script src="https://asciinema.org/a/199040.js" id="asciicast-199040" async></script>
 				</section>
 
 				<section>
 					<h3>Changing and fixing <code>terraform apply</code></h3>
-					<script src="https://asciinema.org/a/w4v5XGo4aod7t3PbJt6H76akC.js" id="asciicast-w4v5XGo4aod7t3PbJt6H76akC"></script>
+					<script src="https://asciinema.org/a/w4v5XGo4aod7t3PbJt6H76akC.js" id="asciicast-w4v5XGo4aod7t3PbJt6H76akC" async></script>
 				</section>
 
 				<section>
-					<h3>Changing implementation details (<a href="https://github.com/lawliet89/terraform-talk/commit/dbb4029952a48db4736e994baee8a485036eba9e" target="_blank">diff</a>)</h3>
+					<h3>Changing implementation details (<a href="https://github.com/lawliet89/terraform-talk/commit/dbb4029952a48db4736e994baee8a485036eba9e"
+						 target="_blank">diff</a>)</h3>
 
-					<script src="https://asciinema.org/a/mFBIpF1urJQin0dgeNGseyONK.js" id="asciicast-mFBIpF1urJQin0dgeNGseyONK"></script>
+					<script src="https://asciinema.org/a/mFBIpF1urJQin0dgeNGseyONK.js" id="asciicast-mFBIpF1urJQin0dgeNGseyONK" async></script>
 				</section>
 
 				<section>
@@ -246,13 +248,87 @@
 				<section>
 					<h3><code>terraform destroy</code> — Ω</h3>
 
-					<script src="https://asciinema.org/a/CZSxEyipg4hHvDsYUEIbXBdZg.js" id="asciicast-CZSxEyipg4hHvDsYUEIbXBdZg"></script>
+					<script src="https://asciinema.org/a/CZSxEyipg4hHvDsYUEIbXBdZg.js" id="asciicast-CZSxEyipg4hHvDsYUEIbXBdZg" async></script>
 				</section>
 
 				<section>
 					<h3>Recreation — α</h3>
 
-					<script src="https://asciinema.org/a/1CMr2pbjGC54pG8WJY3hZWpjZ.js" id="asciicast-1CMr2pbjGC54pG8WJY3hZWpjZ"></script>
+					<script src="https://asciinema.org/a/1CMr2pbjGC54pG8WJY3hZWpjZ.js" id="asciicast-1CMr2pbjGC54pG8WJY3hZWpjZ" async></script>
+				</section>
+			-->
+			</section>
+			<section>
+				<section>
+					<h2>Code Walkthrough</h2>
+					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">https://github.com/lawliet89/terraform-talk/tree/master/demo</a>
+				</section>
+
+				<section>
+					<h4><code>main.tf</code></h4>
+					<script src="https://gist.github.com/lawliet89/0fc9196ca0fcf6cb50e22d948ee97286.js"></script>
+				</section>
+
+				<section>
+					<h4>Required <code>variables.tf</code></h4>
+					<script src="https://gist.github.com/lawliet89/b2ae62f9481c1b5cda2bfc929aeb33b9.js"></script>
+				</section>
+
+				<section>
+					<h4>Optional <code>variables.tf</code></h4>
+					<script src="https://gist.github.com/lawliet89/db9bdeac311caba12c682debff5c90a8.js"></script>
+				</section>
+
+				<section>
+					<h4>Autoscaling Group</h4>
+					<script src="https://gist.github.com/lawliet89/e3670e4b1ba06fcd33f53ec5c07b870c.js"></script>
+				</section>
+
+				<section>
+					<h4>Launch Configuration</h4>
+					<div style="transform: scale(0.8); transform-origin: center top">
+						<script src="https://gist.github.com/lawliet89/218c246ca5dc1751765a0e036f1452fa.js"></script>
+					</div>
+				</section>
+
+				<section>
+					<h4>Security Group Rules</h4>
+					<script src="https://gist.github.com/lawliet89/6293525a06cc85e48372b1cb10f0186d.js"></script>
+				</section>
+
+				<section>
+					<h4>ELB</h4>
+					<script src="https://gist.github.com/lawliet89/83e5885a2df80d313fe4221011727aad.js"></script>
+				</section>
+
+				<section>
+					<h4>Listeners</h4>
+					<div style="transform: scale(0.85); transform-origin: center top">
+						<script src="https://gist.github.com/lawliet89/63c1f6ed32a15e67d25832fb3712d623.js"></script>
+					</div>
+				</section>
+
+				<section>
+					<div style="transform: scale(0.75); transform-origin: center top">
+						<script src="https://gist.github.com/lawliet89/d1b1fab79da782413b4b1d0d5b6d3c44.js"></script>
+					</div>
+				</section>
+
+				<section>
+					<p>Don't forget extra security rules!</p>
+					<script src="https://gist.github.com/lawliet89/eb85987749f754034eed228dedfb8d15.js"></script>
+				</section>
+
+				<section>
+					<p>Repeat for the server.</p>
+				</section>
+
+				<section>
+					<h4>Route 53</h4>
+
+					<p>The order we write this does not matter.</p>
+
+					<script src="https://gist.github.com/lawliet89/baa2528f23fd659e4b3c70f8a4e1d172.js"></script>
 				</section>
 			</section>
 
@@ -275,7 +351,13 @@
 				{ src: 'plugin/markdown/marked.js' },
 				{ src: 'plugin/markdown/markdown.js' },
 				{ src: 'plugin/notes/notes.js', async: true },
-				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+				{
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function () {
+						hljs.initHighlightingOnLoad();
+					}
+				}
 			]
 		});
 	</script>
