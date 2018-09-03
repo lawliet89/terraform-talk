@@ -27,22 +27,30 @@
 	<div class="reveal">
 		<div class="slides">
 			<section>
-				Automating the α and the Ω of Your Infrastructure
-				<small>Automatic creation and destruction through Infrastructure as code</small>
+				<section>
+					Automating the α and the Ω of Your Infrastructure
+					<small>Automatic creation and destruction through Infrastructure as code</small>
 
-				<aside class="notes">
-					<p>
-						Managing huge and complex infrastructure is difficult. The same problem exists even when running your own bare metal racks
-						or on the cloud. Nowadays, many cloud providers and stacks provide rich sets of API for users to manage and run their
-						infrastructure. This is ripe for software to automate the management of infrastructure. </p>
+					<aside class="notes">
+						<p>
+							Managing huge and complex infrastructure is difficult. The same problem exists even when running your own bare metal racks
+							or on the cloud. Nowadays, many cloud providers and stacks provide rich sets of API for users to manage and run their
+							infrastructure. This is ripe for software to automate the management of infrastructure. </p>
 
-					<p>
-						Using Infrastructure as Code allows us to track changes, reason about infrastructure and even reproduce an exact replica
-						of the infrastructure. Terraform is one such tool that works across many cloud providers and service providers such
-						as Cloudflare.
-					</p>
+						<p>
+							Using Infrastructure as Code allows us to track changes, reason about infrastructure and even reproduce an exact replica
+							of the infrastructure. Terraform is one such tool that works across many cloud providers and service providers such
+							as Cloudflare.
+						</p>
 
-				</aside>
+					</aside>
+				</section>
+				<section>
+					<ul>
+						<li>Slides: <a href="https://terraform.gds-gov.tech">terraform.gds-gov.tech</a></li>
+						<li>Source code and demo code: <a href="https://github.com/lawliet89/terraform-talk">github.com/lawliet89/terraform-talk</a></li>
+					</ul>
+				</section>
 			</section>
 
 			<section>
@@ -164,15 +172,15 @@
 					<div>
 						<img src="https://camo.githubusercontent.com/e2ccdf4567b426a81a11c081ee7bdd5dbbd13210/687474703a2f2f692e696d6775722e636f6d2f4a316b3769776e2e706e67"
 						 style="max-height: 240px;"> <br>
-						<a href="https://github.com/gyng/comicchat">https://github.com/gyng/comicchat</a>
+						<a href="https://github.com/gyng/comicchat">github.com/gyng/comicchat</a>
 					</div>
 				</section>
 
 				<section>
 					<h3>Basic Idea</h3>
 					<ul>
-						<li>ASG for clients and servers separately</li>
-						<li>One ELB with different listener rules to target the ASG</li>
+						<li>Autoscaling Group (ASG) for clients and servers separately</li>
+						<li>One Elastic Load Balancer (ELB) with different listener rules to target the ASG</li>
 					</ul>
 				</section>
 
@@ -182,24 +190,23 @@
 				</section>
 
 				<section>
-					<h3>Hidden Details...</h3>
+					<h3>Hidden Details&hellip;</h3>
 					<ul>
 						<li>Security groups rules between ELB and EC2 instances</li>
 						<li>Launch configuration details for ASG</li>
 						<li>Listener for ports</li>
-						<li>Redirect HTTP -> HTTPS listner</li>
+						<li>Redirect HTTP ➡ HTTPS listner</li>
 						<li>Certificate for HTTPS</li>
 						<li>Listener rules to handle different host names</li>
 						<li>Target groups for ASG</li>
-						<li>Dependencies... which should I create first?</li>
-						<li>...</li>
+						<li>Dependencies&hellip; which should I create first?</li>
+						<li>&hellip;</li>
 					</ul>
 				</section>
 
-				<!--
 				<section>
 					<h3>Terraform Implementation</h3>
-					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">https://github.com/lawliet89/terraform-talk/tree/master/demo</a>
+					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">github.com/lawliet89/terraform-talk/tree/master/demo</a>
 				</section>
 
 				<section>
@@ -256,12 +263,12 @@
 
 					<script src="https://asciinema.org/a/1CMr2pbjGC54pG8WJY3hZWpjZ.js" id="asciicast-1CMr2pbjGC54pG8WJY3hZWpjZ" async></script>
 				</section>
-			-->
 			</section>
+
 			<section>
 				<section>
 					<h2>Code Walkthrough</h2>
-					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">https://github.com/lawliet89/terraform-talk/tree/master/demo</a>
+					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">github.com/lawliet89/terraform-talk/tree/master/demo</a>
 				</section>
 
 				<section>
@@ -332,7 +339,30 @@
 				</section>
 			</section>
 
-			<!-- Demo Guard Duty. Security baseline?-->
+			<section>
+				<section>
+					<h2>Bonus: Enable GuardDuty and AWS Config for all regions</h2>
+				</section>
+
+				<section>
+					<h3>Open Source Module</h3>
+					<p>We will make use of an open source module to help us along.</p>
+					<p><a href="https://github.com/nozaq/terraform-aws-secure-baseline">github.com/nozaq/terraform-aws-secure-baseline</a></a></p>
+				</section>
+
+				<section>
+					<div style="transform: scale(0.9); transform-origin: center top">
+						<script src="https://gist.github.com/lawliet89/32650530a77a2fa34348d0c3145da57f.js"></script>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<ul>
+					<li>Slides: <a href="https://terraform.gds-gov.tech">terraform.gds-gov.tech</a></li>
+					<li>Source code and demo code: <a href="https://github.com/lawliet89/terraform-talk">github.com/lawliet89/terraform-talk</a></li>
+				</ul>
+			</section>
 		</div>
 	</div>
 
