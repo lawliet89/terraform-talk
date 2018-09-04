@@ -14,6 +14,20 @@
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/zenburn.css">
 
+	<style>
+		.flex_box {
+			display: flex;
+		}
+
+		.flex_box > div {
+			margin: 10px;
+		}
+
+		.flex_box li {
+			font-size: 75%;
+		}
+	</style>
+
 	<!-- Printing and PDF exports -->
 	<script>
 		var link = document.createElement('link');
@@ -159,6 +173,297 @@
 
 			<section>
 				<section>
+					<h2>Launching an EC2 Instance</h2>
+
+					<ul>
+						<li>Create an EC2 Instance</li>
+						<li>Create security group rule to allow SSH access</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Provider</h3>
+					<div style="display: flex; flex-direction: column">
+						<div>
+							<ul>
+								<li>Providers are plugins</li>
+							</ul>
+						</div>
+						<div>
+							<pre>provider &quot;<font color="#AD7FA8">aws</font>&quot; <font color="#FFD7D7">{</font>
+  <font color="#FCE94F">version</font> = &quot;<font color="#AD7FA8">~&gt; 1.33</font>&quot;
+  <font color="FCE94F">region</font>  = &quot;<font color="#AD7FA8">${var.aws_region}</font>&quot;
+<font color="#FFD7D7">}</font></pre>
+						</div>
+
+					</div>
+				</section>
+
+				<section>
+					<h3>variables</h3>
+					<div class="flex_box">
+						<div>
+							<ul>
+								<li>Variables allows reusability.</li>
+								<li>Define different variables for different "instances" or enrivonments</li>
+								<li>Many ways to manage environment in Terraform.</li>
+								<li>Provide values at run time with `varfiles`.</li>
+							</ul>
+						</div>
+						<div>
+							<script src="https://gist.github.com/lawliet89/f02f7cd3a81379ef728535b31992a5f4.js"></script>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Security Group Rules</h3>
+					<div class="flex_box">
+						<div>
+							<ul>
+								<li>Firewall rules for instances</li>
+								<li>Use Interpolation to "refer" to other Terraform resources</li>
+								<li>Creates implicit dependencies</li>
+								<li>Terraform will figure out the rest</li>
+							</ul>
+						</div>
+						<div>
+							<script src="https://gist.github.com/lawliet89/ad5aba366bb8391cfc232dcd7ffff73b.js"></script>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>AMI</h3>
+					<div class="flex_box">
+						<div>
+							<ul>
+								<li>Find image to launch instance</li>
+								<li>Use `data` sources to refer to existing infrastructure</li>
+								<li>No need to hardcode AMI</li>
+							</ul>
+						</div>
+						<div>
+							<script src="https://gist.github.com/lawliet89/1df80b478bb922570f5c09c051a7ffe5.js"></script>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Instance</h3>
+					<div class="flex_box">
+						<div>
+							<ul>
+								<li>Finally "deploy" the instance</li>
+								<li>Interpolate other resources</li>
+							</ul>
+						</div>
+						<div>
+							<script src="https://gist.github.com/lawliet89/f5a3d99974946b3df4b4f60cb06fb05c.js"></script>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Terraform Execution</h3>
+					<div class="flex_box">
+						<div>
+							<ul>
+								<li>Desired state: Configuration files</li>
+								<li>Actual state: AWS Infrastructure</li>
+								<li>Known State: Terraform State</li>
+								<li>Terraform figures out the dependencies and the steps required to create the resources.</li>
+							</ul>
+						</div>
+						<div><img src="images/tf-exec.png"></div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Plan</h3>
+					<asciinema-player src="demo_ec2/casts/plan.cast" preload speed="2"></asciinema-player>
+				</section>
+
+				<section>
+					<h3>Plan</h3>
+					<div style="height: 70vh; overflow: auto; font-size: 75%">
+<pre>An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  <font color="#4E9A06">+</font> create
+
+Terraform will perform the following actions:
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_instance.instance</font>
+      id:                                        &lt;computed&gt;
+      ami:                                       &quot;ami-0238c4a6bd553d40a&quot;
+      arn:                                       &lt;computed&gt;
+      associate_public_ip_address:               &lt;computed&gt;
+      availability_zone:                         &lt;computed&gt;
+      cpu_core_count:                            &lt;computed&gt;
+      cpu_threads_per_core:                      &lt;computed&gt;
+      ebs_block_device.#:                        &lt;computed&gt;
+      ephemeral_block_device.#:                  &lt;computed&gt;
+      get_password_data:                         &quot;false&quot;
+      instance_state:                            &lt;computed&gt;
+      instance_type:                             &quot;t2.micro&quot;
+      ipv6_address_count:                        &lt;computed&gt;
+      ipv6_addresses.#:                          &lt;computed&gt;
+      key_name:                                  &quot;terraform&quot;
+      network_interface.#:                       &lt;computed&gt;
+      network_interface_id:                      &lt;computed&gt;
+      password_data:                             &lt;computed&gt;
+      placement_group:                           &lt;computed&gt;
+      primary_network_interface_id:              &lt;computed&gt;
+      private_dns:                               &lt;computed&gt;
+      private_ip:                                &lt;computed&gt;
+      public_dns:                                &lt;computed&gt;
+      public_ip:                                 &lt;computed&gt;
+      root_block_device.#:                       &quot;1&quot;
+      root_block_device.0.delete_on_termination: &quot;true&quot;
+      root_block_device.0.volume_id:             &lt;computed&gt;
+      root_block_device.0.volume_size:           &quot;8&quot;
+      root_block_device.0.volume_type:           &quot;gp2&quot;
+      security_groups.#:                         &lt;computed&gt;
+      source_dest_check:                         &quot;true&quot;
+      subnet_id:                                 &quot;subnet-364a6551&quot;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;Terraform Demo&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      tenancy:                                   &lt;computed&gt;
+      volume_tags.%:                             &quot;3&quot;
+      volume_tags.Name:                          &quot;Terraform Demo&quot;
+      volume_tags.Terraform:                     &quot;true&quot;
+      volume_tags.Usage:                         &quot;Terraform Talk by Yong Wen&quot;
+      vpc_security_group_ids.#:                  &lt;computed&gt;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group.instance</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      description:                               &quot;Managed by Terraform&quot;
+      egress.#:                                  &lt;computed&gt;
+      ingress.#:                                 &lt;computed&gt;
+      name:                                      &quot;Terraform Demo&quot;
+      owner_id:                                  &lt;computed&gt;
+      revoke_rules_on_delete:                    &quot;false&quot;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;Terraform Demo&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      vpc_id:                                    &quot;vpc-dac9bcbd&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.ssh_inbound</font>
+      id:                                        &lt;computed&gt;
+      cidr_blocks.#:                             &quot;1&quot;
+      cidr_blocks.0:                             &quot;10.0.0.0/8&quot;
+      from_port:                                 &quot;22&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.instance.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &lt;computed&gt;
+      to_port:                                   &quot;22&quot;
+      type:                                      &quot;ingress&quot;
+
+
+<b>Plan:</b> 3 to add, 0 to change, 0 to destroy.
+</pre>
+					</div>
+				</section>
+				<section>
+					<div style="max-height: 90vh; overflow: auto;">
+						<img src="demo_ec2/graph.svg">
+					</div>
+				</section>
+				<section>
+					<h3>Executing the Plan</h3>
+					<asciinema-player src="demo_ec2/casts/create.cast" preload speed="2"></asciinema-player>
+				</section>
+				<section>
+					<h3>Modify</h3>
+					<div class="flex_box" style="flex-direction: column;">
+						<div>
+							<ul>
+								<li>Plan will show the diff in what Terraform will do</li>
+								<li>Some changes are destructive</li>
+								<li>Some are "in-place"</li>
+							</ul>
+						</div>
+						<div style="font-size: 75%; max-height: 50vh; overflow: auto;">
+							<pre>An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  <font color="#C4A000">~</font> update in-place
+<font color="#CC0000">-</font>/<font color="#4E9A06">+</font> destroy and then create replacement
+
+Terraform will perform the following actions:
+
+<font color="#C4A000">  ~</font> <font color="#C4A000">aws_instance.instance</font>
+      tags.%:                   &quot;3&quot; =&gt; &quot;4&quot;
+      tags.Demo:                &quot;&quot; =&gt; &quot;true&quot;
+      volume_tags.%:            &quot;3&quot; =&gt; &quot;4&quot;
+      volume_tags.Demo:         &quot;&quot; =&gt; &quot;true&quot;
+
+<font color="#C4A000">  ~</font> <font color="#C4A000">aws_security_group.instance</font>
+      tags.%:                   &quot;3&quot; =&gt; &quot;4&quot;
+      tags.Demo:                &quot;&quot; =&gt; &quot;true&quot;
+
+<font color="#CC0000">-</font>/<font color="#4E9A06">+</font> <font color="#C4A000">aws_security_group_rule.ssh_inbound </font><font color="#EF2929"><b>(new resource required)</b></font>
+      id:                       &quot;sgrule-68829610&quot; =&gt; &lt;computed&gt; <font color="#CC0000">(forces new resource)</font>
+      cidr_blocks.#:            &quot;1&quot; =&gt; &quot;2&quot; <font color="#CC0000">(forces new resource)</font>
+      cidr_blocks.0:            &quot;10.0.0.0/8&quot; =&gt; &quot;10.0.0.0/8&quot;
+      cidr_blocks.1:            &quot;&quot; =&gt; &quot;192.168.0.0/16&quot; <font color="#CC0000">(forces new resource)</font>
+      from_port:                &quot;22&quot; =&gt; &quot;22&quot;
+      protocol:                 &quot;tcp&quot; =&gt; &quot;tcp&quot;
+      security_group_id:        &quot;sg-062b707aad99b2c9b&quot; =&gt; &quot;sg-062b707aad99b2c9b&quot;
+      self:                     &quot;false&quot; =&gt; &quot;false&quot;
+      source_security_group_id: &quot;&quot; =&gt; &lt;computed&gt;
+      to_port:                  &quot;22&quot; =&gt; &quot;22&quot;
+      type:                     &quot;ingress&quot; =&gt; &quot;ingress&quot;
+
+
+<b>Plan:</b> 1 to add, 2 to change, 1 to destroy.
+</pre>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Destroy!</h3>
+					<div class="flex_box" style="flex-direction: column">
+						<div>
+							<ul>
+								<li>Easy to clean up and destroy</li>
+								<li>(Also easy to re-create!)</li>
+								<li>Reverse of create — Terraform calculates the dependencies and destroys them in reverse.</li>
+							</ul>
+						</div>
+
+						<div style="height: 70vh; overflow: auto; font-size: 75%">
+<pre>An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  <font color="#CC0000">-</font> destroy
+
+Terraform will perform the following actions:
+
+<font color="#CC0000">  -</font> <font color="#CC0000">aws_instance.instance</font>
+
+<font color="#CC0000">  -</font> <font color="#CC0000">aws_security_group.instance</font>
+
+<font color="#CC0000">  -</font> <font color="#CC0000">aws_security_group_rule.ssh_inbound</font>
+
+
+<b>Plan:</b> 0 to add, 0 to change, 3 to destroy.
+
+<b>Do you really want to destroy all resources?</b>
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only &apos;yes&apos; will be accepted to confirm.
+</pre>
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
 					<h2>Demo</h2>
 				</section>
 
@@ -187,7 +492,7 @@
 
 				<section>
 					<h3>Diagram</h3>
-					<img src="demo/demo.svg" style="max-height: 480px; background-color: white;)">
+					<img src="demo/demo.svg" style="max-height: 85vh; background-color: white;">
 				</section>
 
 				<section>
