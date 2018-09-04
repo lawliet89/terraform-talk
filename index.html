@@ -70,7 +70,7 @@
 
 			<section>
 				<section>
-					<h2>Problems with Managing Infrastructure (Manually)
+					<h2>Problems with Managing (Cloud) Infrastructure (Manually)
 					</h2>
 				</section>
 
@@ -266,7 +266,7 @@
 
 				<section>
 					<h3>Terraform Execution</h3>
-					<div class="flex_box">
+					<div class="flex_box" style="flex-direction: column">
 						<div>
 							<ul>
 								<li>Desired state: Configuration files</li>
@@ -464,7 +464,7 @@ Terraform will perform the following actions:
 
 			<section>
 				<section>
-					<h2>Demo</h2>
+					<h2>Application Demo</h2>
 				</section>
 
 				<section>
@@ -501,7 +501,7 @@ Terraform will perform the following actions:
 						<li>Security groups rules between ELB and EC2 instances</li>
 						<li>Launch configuration details for ASG</li>
 						<li>Listener for ports</li>
-						<li>Redirect HTTP ➡ HTTPS listner</li>
+						<li>Redirect HTTP ➡ HTTPS listener</li>
 						<li>Certificate for HTTPS</li>
 						<li>Listener rules to handle different host names</li>
 						<li>Target groups for ASG</li>
@@ -511,89 +511,12 @@ Terraform will perform the following actions:
 				</section>
 
 				<section>
-					<h3>Terraform Implementation</h3>
-					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">github.com/lawliet89/terraform-talk/tree/master/demo</a>
-				</section>
-
-				<section>
-					<h3>Dependency Graph</h3>
-					<div style="overflow: auto;">
-						<a href="demo/graph.svg" target="_blank"><img src="demo/graph.svg"></a>
-					</div>
-				</section>
-
-				<section>
-					<h3><code>terraform init</code></h3>
-					<asciinema-player src="demo/casts/init.cast" preload></asciinema-player>
-				</section>
-
-				<section>
-					<h3><code>terraform plan</code></h3>
-					<asciinema-player src="demo/casts/plan.cast" preload speed="2"></asciinema-player>
-				</section>
-
-				<section>
-					<h3><code>terraform apply</code></h3>
-					<asciinema-player src="demo/casts/apply-1.cast" preload speed="5"></asciinema-player>
-				</section>
-
-				<section>
-					<h3>Changing and fixing <code>terraform apply</code></h3>
-					<asciinema-player src="demo/casts/apply-2.cast" preload speed="2"></asciinema-player>
-				</section>
-
-				<section>
-					<h3>Changing implementation details (<a href="https://github.com/lawliet89/terraform-talk/commit/dbb4029952a48db4736e994baee8a485036eba9e"
-						 target="_blank">diff</a>)</h3>
-					<asciinema-player src="demo/casts/apply-3.cast" preload speed="2"></asciinema-player>
-				</section>
-
-				<section>
-					<h3>It works!</h3>
-					<a href="https://chat.gahmen.tech">chat.gahmen.tech</a>
-
-					<img src="demo/screenshot.png">
-				</section>
-
-				<section>
-					<h3><code>terraform destroy</code> — Ω</h3>
-					<asciinema-player src="demo/casts/destroy.cast" preload speed="5"></asciinema-player>
-				</section>
-
-				<section>
-					<h3>Recreation — α</h3>
-					<asciinema-player src="demo/casts/reapply.cast" preload speed="5"></asciinema-player>
-				</section>
-			</section>
-
-			<section>
-				<section>
-					<h2>Code Walkthrough</h2>
-					Source code at <a href="https://github.com/lawliet89/terraform-talk/tree/master/demo" target="_blank">github.com/lawliet89/terraform-talk/tree/master/demo</a>
-				</section>
-
-				<section>
-					<h4><code>main.tf</code></h4>
-					<script src="https://gist.github.com/lawliet89/0fc9196ca0fcf6cb50e22d948ee97286.js"></script>
-				</section>
-
-				<section>
-					<h4>Required <code>variables.tf</code></h4>
-					<script src="https://gist.github.com/lawliet89/b2ae62f9481c1b5cda2bfc929aeb33b9.js"></script>
-				</section>
-
-				<section>
-					<h4>Optional <code>variables.tf</code></h4>
-					<script src="https://gist.github.com/lawliet89/db9bdeac311caba12c682debff5c90a8.js"></script>
-				</section>
-
-				<section>
-					<h4>Autoscaling Group</h4>
+					<h4>Client Autoscaling Group</h4>
 					<script src="https://gist.github.com/lawliet89/e3670e4b1ba06fcd33f53ec5c07b870c.js"></script>
 				</section>
 
 				<section>
-					<h4>Launch Configuration</h4>
+					<h4>Client Launch Configuration</h4>
 					<div style="transform: scale(0.8); transform-origin: center top">
 						<script src="https://gist.github.com/lawliet89/218c246ca5dc1751765a0e036f1452fa.js"></script>
 					</div>
@@ -632,11 +555,500 @@ Terraform will perform the following actions:
 				</section>
 
 				<section>
-					<h4>Route 53</h4>
+					<h3><code>terraform plan</code></h3>
+					<asciinema-player src="demo/casts/plan.cast" preload speed="2"></asciinema-player>
+				</section>
 
-					<p>The order we write this does not matter.</p>
+				<section>
+					<div style="max-height: 80vh; overflow: auto; font-size: 75%">
+<pre>An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  <font color="#4E9A06">+</font> create
+ <font color="#06989A">&lt;=</font> read (data resources)
 
-					<script src="https://gist.github.com/lawliet89/baa2528f23fd659e4b3c70f8a4e1d172.js"></script>
+Terraform will perform the following actions:
+
+<font color="#06989A"> &lt;=</font> <font color="#06989A">data.template_file.client_user_data</font>
+      id:                                        &lt;computed&gt;
+      rendered:                                  &lt;computed&gt;
+      template:                                  &quot;#!/usr/bin/env bash\nset -euo pipefail\n\n# Send the log output from this script to user-data.log, syslog, and the console\n# From: https://alestic.com/2010/12/ec2-user-data-output/\nexec &gt; &gt;(tee /var/log/user-data.log|logger -t user-data -s 2&gt;/dev/console) 2&gt;&amp;1\n\n# Install dependencies\n\napt-get update\napt-get install -y git\n\ncurl -fsSL get.docker.com | sh -\n\ncurl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose\nchmod +x /usr/local/bin/docker-compose\n\n# Install Application\nmkdir -p /opt/comicchat\n\ncd /opt/comicchat\ngit clone ${url} ./\ngit checkout ${branch}\n\nCOMPOSE_OVERRIDE=$(cat &lt;&lt;EOF\nversion: \&quot;2.4\&quot;\nservices:\n  client:\n    build:\n      context: .\n      args:\n        WS_URL: \&quot;wss://${server_fqdn}:${server_lb_port}\&quot;\n\nEOF\n)\n\necho \&quot;$${COMPOSE_OVERRIDE}\&quot; &gt; docker-compose.override.yml\n\ndocker-compose up -d client\n&quot;
+      vars.%:                                    &lt;computed&gt;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_autoscaling_attachment.client</font>
+      id:                                        &lt;computed&gt;
+      alb_target_group_arn:                      &quot;${aws_lb_target_group.client.arn}&quot;
+      autoscaling_group_name:                    &quot;${aws_autoscaling_group.client.id}&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_autoscaling_attachment.server</font>
+      id:                                        &lt;computed&gt;
+      alb_target_group_arn:                      &quot;${aws_lb_target_group.server.arn}&quot;
+      autoscaling_group_name:                    &quot;${aws_autoscaling_group.server.id}&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_autoscaling_group.client</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      default_cooldown:                          &lt;computed&gt;
+      desired_capacity:                          &quot;3&quot;
+      force_delete:                              &quot;false&quot;
+      health_check_grace_period:                 &quot;300&quot;
+      health_check_type:                         &quot;ELB&quot;
+      launch_configuration:                      &quot;${aws_launch_configuration.client.name}&quot;
+      load_balancers.#:                          &lt;computed&gt;
+      max_size:                                  &quot;3&quot;
+      metrics_granularity:                       &quot;1Minute&quot;
+      min_size:                                  &quot;3&quot;
+      name:                                      &quot;terraform-demo-client&quot;
+      protect_from_scale_in:                     &quot;false&quot;
+      service_linked_role_arn:                   &lt;computed&gt;
+      tag.#:                                     &quot;1&quot;
+      tag.1140031200.key:                        &quot;Name&quot;
+      tag.1140031200.propagate_at_launch:        &quot;true&quot;
+      tag.1140031200.value:                      &quot;terraform-demo-client&quot;
+      target_group_arns.#:                       &lt;computed&gt;
+      vpc_zone_identifier.#:                     &quot;3&quot;
+      vpc_zone_identifier.1395284303:            &quot;subnet-364a6551&quot;
+      vpc_zone_identifier.3491269669:            &quot;subnet-958162cc&quot;
+      vpc_zone_identifier.486740267:             &quot;subnet-f793cfbe&quot;
+      wait_for_capacity_timeout:                 &quot;10m&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_autoscaling_group.server</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      default_cooldown:                          &lt;computed&gt;
+      desired_capacity:                          &quot;1&quot;
+      force_delete:                              &quot;false&quot;
+      health_check_grace_period:                 &quot;300&quot;
+      health_check_type:                         &lt;computed&gt;
+      launch_configuration:                      &quot;${aws_launch_configuration.server.name}&quot;
+      load_balancers.#:                          &lt;computed&gt;
+      max_size:                                  &quot;1&quot;
+      metrics_granularity:                       &quot;1Minute&quot;
+      min_size:                                  &quot;1&quot;
+      name:                                      &quot;terraform-demo-server&quot;
+      protect_from_scale_in:                     &quot;false&quot;
+      service_linked_role_arn:                   &lt;computed&gt;
+      tag.#:                                     &quot;1&quot;
+      tag.1075806302.key:                        &quot;Name&quot;
+      tag.1075806302.propagate_at_launch:        &quot;true&quot;
+      tag.1075806302.value:                      &quot;terraform-demo-server&quot;
+      target_group_arns.#:                       &lt;computed&gt;
+      vpc_zone_identifier.#:                     &quot;3&quot;
+      vpc_zone_identifier.1395284303:            &quot;subnet-364a6551&quot;
+      vpc_zone_identifier.3491269669:            &quot;subnet-958162cc&quot;
+      vpc_zone_identifier.486740267:             &quot;subnet-f793cfbe&quot;
+      wait_for_capacity_timeout:                 &quot;10m&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_launch_configuration.client</font>
+      id:                                        &lt;computed&gt;
+      associate_public_ip_address:               &quot;false&quot;
+      ebs_block_device.#:                        &lt;computed&gt;
+      ebs_optimized:                             &lt;computed&gt;
+      enable_monitoring:                         &quot;true&quot;
+      image_id:                                  &quot;ami-0238c4a6bd553d40a&quot;
+      instance_type:                             &quot;t2.micro&quot;
+      key_name:                                  &quot;terraform&quot;
+      name:                                      &lt;computed&gt;
+      name_prefix:                               &quot;terraform-demo-client&quot;
+      root_block_device.#:                       &quot;1&quot;
+      root_block_device.0.delete_on_termination: &quot;true&quot;
+      root_block_device.0.iops:                  &lt;computed&gt;
+      root_block_device.0.volume_size:           &quot;8&quot;
+      root_block_device.0.volume_type:           &quot;gp2&quot;
+      security_groups.#:                         &lt;computed&gt;
+      user_data:                                 &quot;0aa85067c0f5bbd064a5ceb68eefff39c8964ce7&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_launch_configuration.server</font>
+      id:                                        &lt;computed&gt;
+      associate_public_ip_address:               &quot;false&quot;
+      ebs_block_device.#:                        &lt;computed&gt;
+      ebs_optimized:                             &lt;computed&gt;
+      enable_monitoring:                         &quot;true&quot;
+      image_id:                                  &quot;ami-0238c4a6bd553d40a&quot;
+      instance_type:                             &quot;t2.micro&quot;
+      key_name:                                  &quot;terraform&quot;
+      name:                                      &lt;computed&gt;
+      name_prefix:                               &quot;terraform-demo-server&quot;
+      root_block_device.#:                       &quot;1&quot;
+      root_block_device.0.delete_on_termination: &quot;true&quot;
+      root_block_device.0.iops:                  &lt;computed&gt;
+      root_block_device.0.volume_size:           &quot;8&quot;
+      root_block_device.0.volume_type:           &quot;gp2&quot;
+      security_groups.#:                         &lt;computed&gt;
+      user_data:                                 &quot;115a995abccff2d4a518757526bb4c588e35d10c&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb.lb</font>
+      id:                                        &lt;computed&gt;
+      access_logs.#:                             &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      arn_suffix:                                &lt;computed&gt;
+      dns_name:                                  &lt;computed&gt;
+      enable_deletion_protection:                &quot;false&quot;
+      enable_http2:                              &quot;true&quot;
+      idle_timeout:                              &quot;60&quot;
+      internal:                                  &lt;computed&gt;
+      ip_address_type:                           &lt;computed&gt;
+      load_balancer_type:                        &quot;application&quot;
+      name:                                      &quot;terraform-demo&quot;
+      security_groups.#:                         &lt;computed&gt;
+      subnet_mapping.#:                          &lt;computed&gt;
+      subnets.#:                                 &quot;3&quot;
+      subnets.1395284303:                        &quot;subnet-364a6551&quot;
+      subnets.3491269669:                        &quot;subnet-958162cc&quot;
+      subnets.486740267:                         &quot;subnet-f793cfbe&quot;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;terraform-demo&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      vpc_id:                                    &lt;computed&gt;
+      zone_id:                                   &lt;computed&gt;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb_listener.front_end</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      default_action.#:                          &quot;1&quot;
+      default_action.0.redirect.#:               &quot;1&quot;
+      default_action.0.redirect.0.host:          &quot;#{host}&quot;
+      default_action.0.redirect.0.path:          &quot;/#{path}&quot;
+      default_action.0.redirect.0.port:          &quot;443&quot;
+      default_action.0.redirect.0.protocol:      &quot;HTTPS&quot;
+      default_action.0.redirect.0.query:         &quot;#{query}&quot;
+      default_action.0.redirect.0.status_code:   &quot;HTTP_301&quot;
+      default_action.0.type:                     &quot;redirect&quot;
+      load_balancer_arn:                         &quot;${aws_lb.lb.arn}&quot;
+      port:                                      &quot;80&quot;
+      protocol:                                  &quot;HTTP&quot;
+      ssl_policy:                                &lt;computed&gt;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb_listener.https</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      certificate_arn:                           &quot;arn:aws:acm:ap-southeast-1:957891382910:certificate/992aea66-8188-418a-b38e-88ec2df2526e&quot;
+      default_action.#:                          &quot;1&quot;
+      default_action.0.target_group_arn:         &quot;${aws_lb_target_group.sink.arn}&quot;
+      default_action.0.type:                     &quot;forward&quot;
+      load_balancer_arn:                         &quot;${aws_lb.lb.arn}&quot;
+      port:                                      &quot;443&quot;
+      protocol:                                  &quot;HTTPS&quot;
+      ssl_policy:                                &quot;ELBSecurityPolicy-TLS-1-2-2017-01&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb_listener.server_wss</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      certificate_arn:                           &quot;arn:aws:acm:ap-southeast-1:957891382910:certificate/992aea66-8188-418a-b38e-88ec2df2526e&quot;
+      default_action.#:                          &quot;1&quot;
+      default_action.0.target_group_arn:         &quot;${aws_lb_target_group.sink.arn}&quot;
+      default_action.0.type:                     &quot;forward&quot;
+      load_balancer_arn:                         &quot;${aws_lb.lb.arn}&quot;
+      port:                                      &quot;8080&quot;
+      protocol:                                  &quot;HTTPS&quot;
+      ssl_policy:                                &quot;ELBSecurityPolicy-TLS-1-2-2017-01&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb_listener_rule.client</font>
+      id:                                        &lt;computed&gt;
+      action.#:                                  &quot;1&quot;
+      action.0.target_group_arn:                 &quot;${aws_lb_target_group.client.arn}&quot;
+      action.0.type:                             &quot;forward&quot;
+      arn:                                       &lt;computed&gt;
+      condition.#:                               &quot;1&quot;
+      condition.~3110813782.field:               &quot;host-header&quot;
+      condition.~3110813782.values.#:            &lt;computed&gt;
+      listener_arn:                              &quot;${aws_lb_listener.https.arn}&quot;
+      priority:                                  &quot;100&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb_listener_rule.server</font>
+      id:                                        &lt;computed&gt;
+      action.#:                                  &quot;1&quot;
+      action.0.target_group_arn:                 &quot;${aws_lb_target_group.server.arn}&quot;
+      action.0.type:                             &quot;forward&quot;
+      arn:                                       &lt;computed&gt;
+      condition.#:                               &quot;1&quot;
+      condition.~3110813782.field:               &quot;host-header&quot;
+      condition.~3110813782.values.#:            &lt;computed&gt;
+      listener_arn:                              &quot;${aws_lb_listener.server_wss.arn}&quot;
+      priority:                                  &quot;100&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb_target_group.client</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      arn_suffix:                                &lt;computed&gt;
+      deregistration_delay:                      &quot;300&quot;
+      health_check.#:                            &quot;1&quot;
+      health_check.0.healthy_threshold:          &quot;3&quot;
+      health_check.0.interval:                   &quot;30&quot;
+      health_check.0.matcher:                    &lt;computed&gt;
+      health_check.0.path:                       &quot;/&quot;
+      health_check.0.port:                       &quot;8080&quot;
+      health_check.0.protocol:                   &quot;HTTP&quot;
+      health_check.0.timeout:                    &lt;computed&gt;
+      health_check.0.unhealthy_threshold:        &quot;3&quot;
+      name:                                      &quot;terraform-demo-client&quot;
+      port:                                      &quot;8080&quot;
+      protocol:                                  &quot;HTTP&quot;
+      proxy_protocol_v2:                         &quot;false&quot;
+      slow_start:                                &quot;0&quot;
+      stickiness.#:                              &quot;1&quot;
+      stickiness.0.cookie_duration:              &quot;86400&quot;
+      stickiness.0.enabled:                      &quot;true&quot;
+      stickiness.0.type:                         &quot;lb_cookie&quot;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;terraform-demo-client&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      target_type:                               &quot;instance&quot;
+      vpc_id:                                    &quot;vpc-dac9bcbd&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb_target_group.server</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      arn_suffix:                                &lt;computed&gt;
+      deregistration_delay:                      &quot;300&quot;
+      health_check.#:                            &lt;computed&gt;
+      name:                                      &quot;terraform-demo-server&quot;
+      port:                                      &quot;8084&quot;
+      protocol:                                  &quot;HTTP&quot;
+      proxy_protocol_v2:                         &quot;false&quot;
+      slow_start:                                &quot;0&quot;
+      stickiness.#:                              &quot;1&quot;
+      stickiness.0.cookie_duration:              &quot;86400&quot;
+      stickiness.0.enabled:                      &quot;true&quot;
+      stickiness.0.type:                         &quot;lb_cookie&quot;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;terraform-demo-server&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      target_type:                               &quot;instance&quot;
+      vpc_id:                                    &quot;vpc-dac9bcbd&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_lb_target_group.sink</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      arn_suffix:                                &lt;computed&gt;
+      deregistration_delay:                      &quot;30&quot;
+      health_check.#:                            &lt;computed&gt;
+      name:                                      &quot;terraform-demo-sink&quot;
+      port:                                      &quot;80&quot;
+      protocol:                                  &quot;HTTP&quot;
+      proxy_protocol_v2:                         &quot;false&quot;
+      slow_start:                                &quot;0&quot;
+      stickiness.#:                              &lt;computed&gt;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;terraform-demo-sink&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      target_type:                               &quot;instance&quot;
+      vpc_id:                                    &quot;vpc-dac9bcbd&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_route53_record.domain</font>
+      id:                                        &lt;computed&gt;
+      alias.#:                                   &quot;1&quot;
+      alias.~2577902594.evaluate_target_health:  &quot;false&quot;
+      alias.~2577902594.name:                    &quot;${aws_lb.lb.dns_name}&quot;
+      alias.~2577902594.zone_id:                 &quot;${aws_lb.lb.zone_id}&quot;
+      allow_overwrite:                           &quot;true&quot;
+      fqdn:                                      &lt;computed&gt;
+      name:                                      &quot;chat.gahmen.tech&quot;
+      type:                                      &quot;A&quot;
+      zone_id:                                   &quot;Z341R9I374MQG8&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group.client</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      description:                               &quot;Security Group for terraform-demo-client&quot;
+      egress.#:                                  &lt;computed&gt;
+      ingress.#:                                 &lt;computed&gt;
+      name:                                      &lt;computed&gt;
+      name_prefix:                               &quot;terraform-demo-client&quot;
+      owner_id:                                  &lt;computed&gt;
+      revoke_rules_on_delete:                    &quot;false&quot;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;terraform-demo-client&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      vpc_id:                                    &quot;vpc-dac9bcbd&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group.lb</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      description:                               &quot;Security group for Comicchat Load balancer&quot;
+      egress.#:                                  &lt;computed&gt;
+      ingress.#:                                 &lt;computed&gt;
+      name:                                      &quot;terraform-demo&quot;
+      owner_id:                                  &lt;computed&gt;
+      revoke_rules_on_delete:                    &quot;false&quot;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;terraform-demo&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      vpc_id:                                    &quot;vpc-dac9bcbd&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group.server</font>
+      id:                                        &lt;computed&gt;
+      arn:                                       &lt;computed&gt;
+      description:                               &quot;Security Group for terraform-demo-server&quot;
+      egress.#:                                  &lt;computed&gt;
+      ingress.#:                                 &lt;computed&gt;
+      name:                                      &lt;computed&gt;
+      name_prefix:                               &quot;terraform-demo-server&quot;
+      owner_id:                                  &lt;computed&gt;
+      revoke_rules_on_delete:                    &quot;false&quot;
+      tags.%:                                    &quot;3&quot;
+      tags.Name:                                 &quot;terraform-demo-server&quot;
+      tags.Terraform:                            &quot;true&quot;
+      tags.Usage:                                &quot;Terraform Talk by Yong Wen&quot;
+      vpc_id:                                    &quot;vpc-dac9bcbd&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.client_egress</font>
+      id:                                        &lt;computed&gt;
+      cidr_blocks.#:                             &quot;1&quot;
+      cidr_blocks.0:                             &quot;0.0.0.0/0&quot;
+      from_port:                                 &quot;0&quot;
+      protocol:                                  &quot;-1&quot;
+      security_group_id:                         &quot;${aws_security_group.client.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &lt;computed&gt;
+      to_port:                                   &quot;0&quot;
+      type:                                      &quot;egress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.client_lb_inbound</font>
+      id:                                        &lt;computed&gt;
+      from_port:                                 &quot;8080&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.client.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &quot;${aws_security_group.lb.id}&quot;
+      to_port:                                   &quot;8080&quot;
+      type:                                      &quot;ingress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.client_ssh_inbound</font>
+      id:                                        &lt;computed&gt;
+      cidr_blocks.#:                             &quot;1&quot;
+      cidr_blocks.0:                             &quot;10.0.0.0/8&quot;
+      from_port:                                 &quot;22&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.client.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &lt;computed&gt;
+      to_port:                                   &quot;22&quot;
+      type:                                      &quot;ingress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.lb_client_egress</font>
+      id:                                        &lt;computed&gt;
+      from_port:                                 &quot;8080&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.lb.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &quot;${aws_security_group.client.id}&quot;
+      to_port:                                   &quot;8080&quot;
+      type:                                      &quot;egress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.lb_http_ingress</font>
+      id:                                        &lt;computed&gt;
+      cidr_blocks.#:                             &quot;1&quot;
+      cidr_blocks.0:                             &quot;0.0.0.0/0&quot;
+      from_port:                                 &quot;80&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.lb.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &lt;computed&gt;
+      to_port:                                   &quot;80&quot;
+      type:                                      &quot;ingress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.lb_https_ingress</font>
+      id:                                        &lt;computed&gt;
+      cidr_blocks.#:                             &quot;1&quot;
+      cidr_blocks.0:                             &quot;0.0.0.0/0&quot;
+      from_port:                                 &quot;443&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.lb.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &lt;computed&gt;
+      to_port:                                   &quot;443&quot;
+      type:                                      &quot;ingress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.lb_server_egress</font>
+      id:                                        &lt;computed&gt;
+      from_port:                                 &quot;8084&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.lb.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &quot;${aws_security_group.server.id}&quot;
+      to_port:                                   &quot;8084&quot;
+      type:                                      &quot;egress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.lb_wss_ingress</font>
+      id:                                        &lt;computed&gt;
+      cidr_blocks.#:                             &quot;1&quot;
+      cidr_blocks.0:                             &quot;0.0.0.0/0&quot;
+      from_port:                                 &quot;8080&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.lb.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &lt;computed&gt;
+      to_port:                                   &quot;8080&quot;
+      type:                                      &quot;ingress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.server_egress</font>
+      id:                                        &lt;computed&gt;
+      cidr_blocks.#:                             &quot;1&quot;
+      cidr_blocks.0:                             &quot;0.0.0.0/0&quot;
+      from_port:                                 &quot;0&quot;
+      protocol:                                  &quot;-1&quot;
+      security_group_id:                         &quot;${aws_security_group.server.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &lt;computed&gt;
+      to_port:                                   &quot;0&quot;
+      type:                                      &quot;egress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.server_lb_inbound</font>
+      id:                                        &lt;computed&gt;
+      from_port:                                 &quot;8084&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.server.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &quot;${aws_security_group.lb.id}&quot;
+      to_port:                                   &quot;8084&quot;
+      type:                                      &quot;ingress&quot;
+
+<font color="#4E9A06">  +</font> <font color="#4E9A06">aws_security_group_rule.server_ssh_inbound</font>
+      id:                                        &lt;computed&gt;
+      cidr_blocks.#:                             &quot;1&quot;
+      cidr_blocks.0:                             &quot;10.0.0.0/8&quot;
+      from_port:                                 &quot;22&quot;
+      protocol:                                  &quot;tcp&quot;
+      security_group_id:                         &quot;${aws_security_group.server.id}&quot;
+      self:                                      &quot;false&quot;
+      source_security_group_id:                  &lt;computed&gt;
+      to_port:                                   &quot;22&quot;
+      type:                                      &quot;ingress&quot;
+
+
+<b>Plan:</b> 30 to add, 0 to change, 0 to destroy.
+</pre>
+					</div>
+				</section>
+
+				<section>
+					<h3>Dependency Graph</h3>
+					<div style="overflow: auto;">
+						<a href="demo/graph.svg" target="_blank"><img src="demo/graph.svg"></a>
+					</div>
+				</section>
+
+				<section>
+					<h3>Creation — α</h3>
+					<asciinema-player src="demo/casts/reapply.cast" preload speed="20"></asciinema-player>
+				</section>
+
+				<section>
+					<h3>It works!</h3>
+					<a href="https://chat.gahmen.tech">chat.gahmen.tech</a>
+
+					<img src="demo/screenshot.png">
+				</section>
+
+				<section>
+					<h3><code>terraform destroy</code> — Ω</h3>
+					<asciinema-player src="demo/casts/destroy.cast" preload speed="20"></asciinema-player>
 				</section>
 			</section>
 
